@@ -3,6 +3,7 @@ console.log('Server script started');
 require('dotenv').config(); // Load environment variables
 const express = require('express'); // Web framework
 const axios = require('axios'); // HTTP client
+const cors = require('cors');
 const { transliterate } = require('transliteration'); // Transliteration for non-Latin characters
 
 const app = express();
@@ -68,6 +69,16 @@ const fetchTrackDetails = async (page = 1) => {
     return null;
   }
 };
+
+// Enable CORS for all routes
+app.use(cors());
+
+// You can also configure it to allow specific origins if needed:
+app.use(cors({
+  origin: '*', // Replace with your frontend URL
+  methods: ['GET', 'POST'], // Customize the methods as needed
+  allowedHeaders: ['Content-Type', 'Authorization'] // Add custom headers if necessary
+}));
 
 // API endpoint to serve track details
 app.get('/current-track', async (req, res) => {

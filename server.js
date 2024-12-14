@@ -45,20 +45,24 @@ const fetchTrackDetails = async (page = 1) => {
 
     // Format the track details, now including userplaycount
     const trackDetails = {
-      title: truncateText(nowPlayingTrack.name, 43),
-      artist: truncateText(nowPlayingTrack.artist?.['#text'], 41),
-      album: truncateText(nowPlayingTrack.album?.['#text'], 41),
-      artwork: nowPlayingTrack.image?.find(img => img.size === 'extralarge')?.['#text'] ||
-               'https://via.placeholder.com/300',
-      url: nowPlayingTrack.url || 'https://www.last.fm',
-      nowPlaying: !!nowPlayingTrack['@attr']?.nowplaying,
-      userplaycount: trackInfo.userplaycount || 0,  // Add userplaycount to the details
-      totalplaycount: nowPlayingTrack,
-      user: user,
+      recenttracks: {
+        track: [{
+          title: truncateText(nowPlayingTrack.name, 43),
+          artist: truncateText(nowPlayingTrack.artist?.['#text'], 41),
+          album: truncateText(nowPlayingTrack.album?.['#text'], 41),
+          artwork: nowPlayingTrack.image?.find(img => img.size === 'extralarge')?.['#text'] ||
+                   'https://via.placeholder.com/300',
+          url: nowPlayingTrack.url || 'https://www.last.fm',
+          nowPlaying: !!nowPlayingTrack['@attr']?.nowplaying,
+          userplaycount: trackInfo.userplaycount || 0,  // Add userplaycount to the details
+          totalplaycount: nowPlayingTrack,
+        }],
+        user: user,
+      },
     };
-
-    console.log('Formatted Track Details:', trackDetails);
-    return trackDetails;
+    
+    console.log('Formatted Track Details with recenttracks:', trackDetails);
+    return trackDetails;    
   } catch (error) {
     console.error('Error fetching track details:', error.message);
     return null;

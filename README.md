@@ -1,1 +1,1 @@
-This is the code for my ipod backend.
+This is the code for my ipod backend. Author: Siddarth Krishnan
